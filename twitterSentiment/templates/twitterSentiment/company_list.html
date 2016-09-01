@@ -1,0 +1,31 @@
+{% extends "twitterSentiment/base.html" %}
+
+{% block content %}
+
+{% if all_companies %}
+    <table>
+        <tr>
+            <td>Company Name</td>
+            <td>Actions</td>
+        </tr>
+        {% for company in all_companies %}
+        <tr>
+            <td>{{ company.company_name }}</td>
+            <td><a href="{% url 'twitter_text_extract' company.pk %}">Twitter text extract</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    No companies are found in the database.
+{% endif %}
+
+{% endblock %}
+
+
+{% block actionmenu %}
+    <tr>
+        <td><a href="{% url 'company_new' %}">Add a Company</a></td>
+    </tr>
+{% endblock %}
+

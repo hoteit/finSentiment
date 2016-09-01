@@ -1,0 +1,16 @@
+{% extends "twitterSentiment/base.html" %}
+
+{% block content %}
+    <h4><i>Add New Company</i></h4>
+    <form action="{% url 'company_new' %}" method="post" class="form-group">
+        {%  csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="fieldWrapper">
+            <label for="id_company_name">Company:</label>
+            {{ form.company_name }}
+            <span style="color: red; ">{{ form.company_name.errors }}</span>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+{% endblock %}

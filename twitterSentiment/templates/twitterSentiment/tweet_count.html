@@ -1,0 +1,10 @@
+{% extends "twitterSentiment/base.html" %}
+
+{% block content %}
+<h3>Tweet Count = {{ tweet_count }}</h3>
+<h3>Untrained Count = {{ untrained_count }}</h3>
+<h3>Classified Tweets: {{ classified_count }}</h3>
+<h3>Remaining to Classify: {{ ready_to_train_count }}</h3>
+
+
+{% endblock %}

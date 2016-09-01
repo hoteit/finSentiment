@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>finSentiment Companies Importer</title>
+</head>
+<body>
+<form action="{% url 'companiesimport' %}" method="post">
+    list of companies to import with ';' as delimeter:<br>
+    {% csrf_token %}
+    {{  form.as_table }}
+
+    <button type="submit">Import Companies</button>
+</body>
+</html>
