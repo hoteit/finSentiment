@@ -74,7 +74,7 @@ class twitterListener(StreamListener):
                     return
                 else:
                     print("tweet: ", tweet['text'])
-                    twitterDatabase(tweet['text'])
+                    twitterDatabase(tweet)
         except:
             print("Error in Twitter listener. Error message:", sys.exc_info())
         return
@@ -103,15 +103,16 @@ def companyNamesbyStocks(tweet):
 
 def twitterDatabase(tweet):
     ## take Twitter financialdata in jsonformat and insert it into the database
+    global systemid
     try:
-        aTweet = models.TwitterText(twitter_user_id=tweet['user']['id'],
+        aTweet = models.TwitterText(twitter_userid=tweet['user']['id_str'],
                                     twitter_user_name=tweet['user']['screen_name'],
                                     twitter_text=tweet['text'],
-                                    twitter_text_id=tweet['id'],
+                                    twitter_textid=tweet['id_str'],
                                     twitter_text_timestamp=timeupdate(tweet['created_at']),
-                                    #twitter_text_keyword=companyNamesbyStocks(tweet['text']),
+                                    twitter_text_keyword=companyNamesbyStocks(tweet['text']),
+                                    twitter_retweeted = tweet['retweeted'],
                                     training_user_id=systemid)
-
         aTweet.save()
     except:
         print("Error in Django insert tweet. error message:", sys.exc_info())
