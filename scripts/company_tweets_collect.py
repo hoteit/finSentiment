@@ -17,13 +17,14 @@ import finSentiment.local_settings as settings
 companies = Company.objects.all()  # get the list of companies from the database
 
 stocks = pd.DataFrame(list(companies.values('symbol')))  # get the stock symbols
+
 stocks['symbol'] = stocks['symbol'].apply(lambda x: str('$'+x.strip()))
 
 tweetsmax = 500  #pick maximum 500 tweets for each company
 tweetscount = 1
 alltweetscount = 1
 iterationcount = 1
-systemid = "system"
+systemid = User.objects.get(username="system").id
 
 
 def run_tweeter_listening():
@@ -93,12 +94,24 @@ class twitterListener(StreamListener):
         return
 
 def companyNamesbyStocks(tweet):
-    #extract the company behind each stock as the latter is mentioned in a tweet
+    #extract a list of company id for each stock symbol captured from the detected tweets
+    #the data is then inserted in column TwitterText.twitter_text_keyword
     try:
-        match = re.findall("\$\w+",tweet) #captures the stock symbols starting with $, such as $VZ
-        global sp500_companies
-        return ",".join(sp500_companies.Name.get(symbol,symbol)+"("+symbol+")" for symbol in match)
+        stockSymbolsinTweets = re.findall("\$\w+",tweet) #captures the stock symbols starting with $, such as $VZ
+        stocksfound = ""
+        for stock in stockSymbolsinTweets:
+            try:
+                astocksymboldfound = companies.get(symbol=str(stock).lstrip('$').upper())
+                if astocksymboldfound:
+                    stocksfound += ","+str(astocksymboldfound.id)
+            except Company.DoesNotExist:
+                pass
+            except:
+                print("Error in getting stock symbols from tweets:", sys.exc_info())
+                pass;
+        return stocksfound.lstrip(",")
     except:
+        print("Error in getting stock symbols from tweets:", sys.exc_info())
         return "na"
 
 def twitterDatabase(tweet):
