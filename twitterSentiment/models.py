@@ -146,14 +146,15 @@ class CompanyKeyStats(models.Model):
 
 class TwitterText(models.Model):
     # Each sentiment related to the companies under analysis and captured from the social media platforms
-    twitter_user_id = models.CharField('Social User ID', max_length=255)
-    twitter_user_name = models.CharField('Social User Name', max_length=100)
-    twitter_text = models.CharField('Social Updates', max_length=1024)
-    twitter_text_id = models.CharField('Message Id', max_length=255)
-    twitter_text_timestamp = models.DateTimeField('Message Timestamp')
-    twitter_text_keyword = models.CharField('Keyword', max_length=1000)
+    twitter_userid = models.CharField('Twitter User ID', max_length=255, null=True, blank=True)
+    twitter_user_name = models.CharField('Social User Name', max_length=100, null=True, blank=True)
+    twitter_text = models.CharField('Social Updates', max_length=1024, null=True, blank=True)
+    twitter_textid = models.CharField('Message Id', max_length=255, null=True, blank=True)
+    twitter_text_timestamp = models.DateTimeField('Message Timestamp', null=True, blank=True)
+    twitter_text_keyword = models.CharField('Keyword', max_length=1000, null=True, blank=True)
     twitter_for_training = models.IntegerField('training value', default=9) #9 untrained #0: trained dataset,1: dev-test dataset, 2: test dataset #4 applied dataset
     twitter_sentiment = models.IntegerField('sentiment', default=2)
+    twitter_retweeted = models.BooleanField('retweeted', default=False)
     training_user = models.ForeignKey(User, null=True, blank=True)
 
     class Meta:

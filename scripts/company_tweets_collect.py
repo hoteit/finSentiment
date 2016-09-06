@@ -1,4 +1,10 @@
 __author__ = 'Tarek Hoteit'
+# This script first queries the list of companies' stock symbols in the database. It then picks up on an iterative
+# basis a sample set of stock symbols to search for on Twitter in real-time streaming. Tweets associated with the
+# stocks are then stored in the TwitterText database.
+#To run the script:
+#    runscript company_tweets_collect -v3 --settings=finSentiment.local_settings
+
 import tweepy
 from tweepy import StreamListener
 from twitterSentiment import models
