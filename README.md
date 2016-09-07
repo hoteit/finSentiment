@@ -5,8 +5,13 @@ Setup Instructions (in progress)
 Setup
 -----
 
-1) install mysql, apache, python3, virtualenv
+Assuming that you are install the code on a Debian Linux. If not, find
+and replace the commands, like apt-get, with ones that fit your distro.
 
+1) install mysql, apache2, python3, virtualenv
+    sudo apt-get install mysql.server apache2 python3 virtualenv
+    
+    
 2) Setup mysql database
     create database finsentimentdb;
     create user 'financedbuser'@'localhost' identified by '<password>';
@@ -14,17 +19,19 @@ Setup
     flush privileges;
    
 3) setup and activate Python3 virtual environment
-    mkdir {env-location} - (select the path where you want the virtual environment)
-    run virtualenv --python=python3 {env-location}
+    mkdir {env-location} - (eg. /var/www/env/)
+    virtualenv {env-location}/finSentimentENV --python=python3
     source {env-location}/bin/activate
     
 4) install all project requirements (make sure that you are in the virtual environment
     pip install -r requirements.txt
-	
+    note: if pip needs updating, run pip install pip --upgrade	
+    notel if pip fails for python.h not found, run sudo apt-get install python3-dev
 5) download and configure the latest code from github 
+    cd {location of where you want the code} eg. /var/www/apps
     git clone https://github.com/hoteit/finSentiment.git
     
-6) update project settings
+6) update project settings in {app-location}/finSentiment
     - setup a Twitter app at https://apps.twitter.com (make sure you have a Twitter account first)
     - get Consumer Key (API Key), Consumer Secret (API Secret), Access Token, 	Access Token Secret
     and add them in the appropriate location with the settings.py configuration file
