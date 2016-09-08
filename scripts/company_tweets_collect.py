@@ -20,28 +20,17 @@ import schedule
 
 import finSentiment.local_settings as settings
 
+#initialize variables
 companies = Company.objects.all()  # get the list of companies from the database
-
 stocks = pd.DataFrame(list(companies.values('symbol')))  # get the stock symbols
-
 stocks['symbol'] = stocks['symbol'].apply(lambda x: str('$'+x.strip()))
 
-tweetsmax = 500  #pick maximum 500 tweets for each company
-tweetscount = 1
-alltweetscount = 1
-iterationcount = 1
+auth = tweepy.OAuthHandler(settings.consumer_key, settings.consumer_secret)
+auth.set_access_token(settings.access_token, settings.access_token_secret)
+api = tweepy.API(auth)
+
 systemid = User.objects.get(username="system").id
 
-
-def run_tweeter_listening():
-    try:
-        stocks_sample_df = stocks.sample(n=settings.tweets_polling_size).to_csv(header=False, line_terminator=',', index=False)
-        twitterStreaming(stocks_sample_df)
-    except:
-        print(sys.exc_info())
-
-def stop_tweeter_listening():
-    print("stop")
 
 
 def timeupdate(twitterdate):
@@ -57,34 +46,29 @@ class twitterListener(StreamListener):
     def __init__(self, api = None, fprefix = 'streamer'):
         self.api = api or tweepy.API()
         self.counter = 0
+        self.time = time.time()
         return
 
     def on_data(self, data):
-        global tweetsmax
-        global tweetscount
-        global alltweetscount
-        global iterationcount
         global systemid
-        print("tweets count:",tweetscount, "/",tweetsmax,". Iteration: ",iterationcount," Total tweets: ", alltweetscount)
-        if tweetsmax == tweetscount:
-            tweetscount=0
-            iterationcount += 1
-            return False
-        else:
-            tweetscount += 1
-            alltweetscount += 1
+        self.counter += 1
         try:
             tweet = json.loads(data) #convert twitter stream in json into Python dictionary
-            print (tweet)
             if isinstance(tweet, dict):
                 if tweet['user']['lang'] != 'en': #only store english tweets
                     return
                 else:
-                    print("tweet: ", tweet['text'])
                     twitterDatabase(tweet)
+                    print("tweets count: %d / %d, tweet: %s " % (self.counter, settings.tweets_max_per_sample, tweet['text']))
         except:
             print("Error in Twitter listener. Error message:", sys.exc_info())
-        return
+
+        if self.counter > settings.tweets_max_per_sample:
+            self.counter = 0
+            return False
+        else:
+            return
+
 
     def on_limit(self, track):
         print(">> limit")
@@ -92,12 +76,19 @@ class twitterListener(StreamListener):
 
     def on_error(self, status_code):
         print(">>> error: ", str(status_code) + "\n")
+        if status_code == 420:
+            # returning False in on_data disconnects the stream
+            return False
         return
 
+    def on_disconnect(self, notice):
+        print (">> disconnecting")
+        return False
+
     def on_timeout(self):
-        print(">>> timeout Sleeping for 60 seconds...\n")
-        time.sleep(60)
-        return
+        print(">>> timed out ...\n")
+        return False
+
 
 def companyNamesbyStocks(tweet):
     #extract a list of company id for each stock symbol captured from the detected tweets
@@ -138,25 +129,24 @@ def twitterDatabase(tweet):
     return
 
 
-def twitterStreaming(stocks):
+def run_tweeter_listening():
     try:
-        print ("test"+settings.consumer_key)
-        auth = tweepy.OAuthHandler(settings.consumer_key, settings.consumer_secret)
-        auth.set_access_token(settings.access_token, settings.access_token_secret)
-        api = tweepy.API(auth)
+        time.sleep(60)
         listener = twitterListener(api, "test")
-        print ("Begin Twitter streaming for ", str(stocks).rstrip(','))
         stream = tweepy.Stream(auth, listener)
-        stream.filter(track=[stocks])
+        stocks_sample_df = stocks.sample(n=settings.tweets_polling_size).to_csv(header=False, line_terminator=',', index=False)
+        print("Begin Twitter streaming for ", str(stocks_sample_df).rstrip(','))
+        stream.filter(track=[stocks_sample_df], async=True)
     except:
-        print ("Error in Twitter streaming",sys.exc_info())
-    return True
+        print(sys.exc_info())
 
+def stop_tweeter_listening():
+    print("stop")
 
 def run():
-    try:
+    try:#schedule.every(settings.tweets_polling_time).seconds.do(stop_tweeter_listening)
         schedule.every(settings.tweets_polling_time).seconds.do(run_tweeter_listening)
-        schedule.every(settings.tweets_polling_time).seconds.do(stop_tweeter_listening)
+
         while True:
             schedule.run_pending()
             time.sleep(1)
