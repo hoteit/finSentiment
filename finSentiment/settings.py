@@ -55,9 +55,9 @@ consumer_secret = ""
 access_token = ""
 access_token_secret = ""
 
-tweets_polling_time = 1 # in seconds, how long to wait till a new fresh of sampling is captured
+tweets_polling_time = 300 # in seconds, how long to wait till a new fresh of sampling is captured
 tweets_polling_size = 200 # group of companies to monitor in each sampling
-
+tweets_max_per_sample = 50 # maximum number of tweets detected per iteration
 
 
 MIDDLEWARE = [

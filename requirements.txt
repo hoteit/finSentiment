@@ -5,3 +5,4 @@ ipython === 5.1.0
 jupyter === 1.0.0
 pandas === 0.18.1
 schedule === 0.3.2
+# TODO: include tweepy
