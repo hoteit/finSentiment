@@ -1,8 +1,8 @@
-mysqlclient === 1.3.7
-django === 1.10
-django-extensions === 1.7.2
-ipython === 5.1.0
-jupyter === 1.0.0
-pandas === 0.18.1
-schedule === 0.3.2
-# TODO: include tweepy
+mysqlclient
+django
+django-extensions
+ipython
+jupyter
+pandas
+schedule
+tweepy
