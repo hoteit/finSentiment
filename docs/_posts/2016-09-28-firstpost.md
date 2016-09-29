@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "About finSentiment website"
-date:   2016-09-28 18:57 -0500
+date:   2016-09-28 16:57 -0500
 categories: news
 ---
 

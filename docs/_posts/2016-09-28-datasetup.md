@@ -6,7 +6,7 @@ categories: setup
 permalink: /setup/datapopulation
 ---
 
-After completing the [Installation](/finSentiment/setup/installation) step, the data population process is as follows:
+After completing the [Installation](/finSentiment/setup/installation) step, the data population process is as follows:  
 
 step 1 - extract the list of company and stock symbols from Nasdaq website. The script retrieves the stock symbols of all publicly-held companies in the United States 
 and it also adds  major market information.
