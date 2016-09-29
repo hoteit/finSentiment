@@ -103,10 +103,18 @@ If you get errors when running `pip install -r requirements.txt`, here is what y
        </Directory>
     </VirtualHost>
     
- b. activate the virtual directory `a2en
+ b. activate the virtual directory `a2ensite finSentiment.conf' and restart the Apache2 instance
  c. update the file /var/www/apps/finSentiment/apache/wsgi.py with the location of your Python environment and the code
  d/ 
 
+8) You now need to setup a Twitter application account. Access https://apps.twitter.com/ , and select 
+**Create New App** Follow the instructions to setup Consumer Key (API Key), Consumer Secret(API Secret), Access Token, and Access Token Secret
+Once you do, copy and paste the values in *finSentiment/settings.py:
+
+    consumer_key = ""
+    consumer_secret = ""
+    access_token = ""
+    access_token_secret = ""
 
 Once you are done, you can go ahead with the [Data Population](/finSentiment/setup/datapopulation) process
  
