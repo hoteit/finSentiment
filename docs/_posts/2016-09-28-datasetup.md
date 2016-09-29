@@ -3,9 +3,10 @@ layout: post
 title:  "Data Population"
 date:   2016-09-28 19:25 -0500
 categories: setup
+permalink: /setup/datapopulation
 ---
 
-* Data Population
+After completing the [Installation](/finSentiment/setup/installation) step, the data population process is as follows:
 
 step 1 - extract the list of company and stock symbols from Nasdaq website. The script retrieves the stock symbols of all publicly-held companies in the United States 
 and it also adds  major market information.
@@ -24,7 +25,7 @@ Tweets associated with the stocks are then stored in the TwitterText database.
    
     ./manage.py runscript company_tweets_collect -v3 --settings=finSentiment.local_settings
    
-   
+ 
    
       
    

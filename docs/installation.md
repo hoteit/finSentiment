@@ -1,11 +1,12 @@
 ---
 layout: page
 title: Installation
-permalink: /install/
+permalink: /install
 ---
 
 The installation process consits of several steps. 
-Step 1: [[linux-installation]]
 
+Step 1: [Installation](/finSentiment/setup/installation)
 
-[linux-installation]: setup/linux-linux-setup/
+Step 2: [Data Population](/finSentiment/setup/datapopulation)
+

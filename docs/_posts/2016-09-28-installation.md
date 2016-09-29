@@ -3,9 +3,8 @@ layout: post
 title:  "Installation Process"
 date:   2016-09-28 17:57 -0500
 categories: setup
+permalink: /setup/installation
 ---
-
-* Linux Installation
 
 The application is mostly developed in Python using [Tweepy](http://www.tweepy.org) to extract tweets from Twitter, [Django](https://djangoproject.com) for the portal and to help train the machine learning algorithm, [Stanford Core NLP](https://stanfordnlp.github.io/CoreNLP) for the sentiment analysis, and various Python tools including [IPython](http://ipython.org/), [Pandas](http://pandas.pydata.org/), and [Django-extensions](https://github.com/django-extensions/django-extensions).
 
@@ -108,3 +107,6 @@ If you get errors when running `pip install -r requirements.txt`, here is what y
  c. update the file /var/www/apps/finSentiment/apache/wsgi.py with the location of your Python environment and the code
  d/ 
 
+
+Once you are done, you can go ahead with the [Data Population](/finSentiment/setup/datapopulation) process
+ 
