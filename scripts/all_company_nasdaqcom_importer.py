@@ -4,7 +4,7 @@ import pandas as pd
 from finSentiment import settings
 import sys
 from django.utils import timezone
-from twitterSentiment.scripts import utilities
+from scripts import utilities
 
 # script that accesses the list of companies and stocks from
 # NASDAQ website and imports them into the database and also creates a local file in directory.

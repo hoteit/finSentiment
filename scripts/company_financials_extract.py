@@ -5,7 +5,7 @@ import urllib
 import sys
 from django.utils import timezone
 from twitterSentiment.models import Company, CompanyFinancials, CompanyAltmanZscore
-from twitterSentiment.scripts import utilities
+from scripts import utilities
 
 #script that reads each stock symbol in twitterSentiment_company table, gets the latest
 #financials from MorningStar.com and Yahoo Finance, calculates Altman Z-Score and imports the records in twitterSentiment_companyfinancials
