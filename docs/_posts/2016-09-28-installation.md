@@ -10,14 +10,16 @@ The application is mostly developed in Python using [Tweepy](http://www.tweepy.o
 
 The requirements to setup the system is as follows. Note that it is assumed that we are installing on a Debian instance.
 
-1) setup a Debian instance on a local machine, a Docker container, or a cloud instance. Then run:
+1) Setup a Debian instance on a local machine, a Docker container, or a cloud instance. Then run:
      
      sudo apt-get update
      sudo apt-get upgrade
 
-2) install python dev, mysql server and client
-`sudo apt-get install mysql-server mysqlclient python-dev libmysqlclient-dev`
-setup the root account and then run `sudo mysql_secure_installation`
+2) Install python dev, mysql server and client
+
+    sudo apt-get install mysql-server mysqlclient python-dev libmysqlclient-dev
+
+Setup the root account and then run `sudo mysql_secure_installation`
 
 3) make sure that Python3 is installed and install VirtualEnv so as to isolate our Python environment for the app only.
 `sudo apt-get install virtualenv`
@@ -117,4 +119,17 @@ Once you do, copy and paste the values in *finSentiment/settings.py:
     access_token_secret = ""
 
 Once you are done, you can go ahead with the [Data Population](/finSentiment/setup/datapopulation) process
+ 
+
+9) Setup Django administration page, create a super user and add a new user called `system`
+ 
+    (env) ./manage createsuperuser
+    then access `http://(site)/finSentiment/admin`
+    and create a new user called `system`
+  
+ Note with the virtualenv setup, a symbolic link needs to be added so as to support the formatting
+ with the new setup, something like that:
+ 
+     ln -s /var/www/apps/finSentiment/env/lib/python3.4/site-packages/django/contrib/admin/static/admin /var/www/apps/finSentiment/twitterSentiment/static
+ 
  

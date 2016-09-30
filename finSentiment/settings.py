@@ -136,4 +136,4 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
   #  PROJECT_ROOT+'/scr/static',
 )
-STATIC_ROOT=PROJECT_ROOT+'/scr/static'
+STATIC_ROOT=PROJECT_ROOT+'/finSentiment/static'
