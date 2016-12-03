@@ -3,5 +3,8 @@ in the United States. The work was first developed as part of my 2015 dissertati
 
 Instructions available on the [Wiki Page] (https://github.com/hoteit/finSentiment/wiki)
 
+Dissertation is available on  [Effects of Investor Sentiment Using Social Media on Corporate Financial Distress](http://scholarworks.waldenu.edu/dissertations/464/)
+ 
+
 
 
